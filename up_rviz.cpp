@@ -10,7 +10,6 @@
 #include <ros/ros.h>
 #include <Eigen/Core>
 #include <Eigen/Geometry>
-#include "IMU_Processing.hpp"
 #include <nav_msgs/Odometry.h>
 #include <nav_msgs/Path.h>
 #include <visualization_msgs/Marker.h>
@@ -31,7 +30,6 @@
 #include <tf/transform_broadcaster.h>
 #include <geometry_msgs/Vector3.h>
 #include <livox_ros_driver/CustomMsg.h>
-#include "preprocess.h"
 #include <ikd-Tree/ikd_Tree.h>
 #include <opencv2/opencv.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
@@ -537,7 +535,7 @@ bool* judge_dynamic(PointCloudXYZI::Ptr lidarcloud,double x_max,double depth, do
             pcl::PCDWriter pcd_writer;
             pcd_writer.writeBinary(all_points_dir, *real_dynamic_cloud);
             for(const auto& point : real_dynamic_cloud->points){
-                double x = (x_max-weight+1)/point.x;//(x_max-weight+1)/point.x;
+                double x = (x_max-weight)/point.x;//(x_max-weight+1)/point.x;
                 double y = point.y*x, z = point.z*x;
                 double z_dis = (top-depth)/4;
                 double y_dis = (left-right)/4;
